@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>ENQUETE | AdminLogin</title>
+
+    <link href="{% static 'landing/assets/images/e1.png' %}" rel="icon">
+    <link href="{% static 'landing/assets/images/e1.png' %}" rel="apple-touch-icon">
+
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- <link rel="stylesheet" href="{% static 'landing/assets/vendor/iconfonts/font-awesome/css/all.min.css' %}"> -->
+
+    <link rel="stylesheet" href="{% static 'landing/assets/css/style.css' %}">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body style="background-image: url({% static 'landing/assets/images/line.jpg' %})">
+
+    <h2 style="color:#fff; font-family: roboto; letter-spacing: 0.4em; font-size: 0.8em; font-weight: 700;"> <img src="{% static 'landing/assets/images/e2.gif' %}" width="100px" height="80px">WELCOME TO ADMIN LOGIN</h2>
+    <div class="container" id="container" style="width: 750px;">
+        <div class="form-container sign-up-container" >
+            <form action="/Asignup" method="POST">
+                {% csrf_token %}
+                <h1 style="font-family: Oswald;letter-spacing: 0.1em;">Create Account</h1>
+                <div class="social-container">
+                    <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>&nbsp;
+                    <a href="#" class="google-plus"><i class="fa fa-twitter"></i></a>&nbsp;
+                    <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                </div>
+                <h5><span>or use your email for registration</span></h5>
+                <input type="text" name="name" id="name" placeholder="Name" required>
+                <input type="email" name="email_id" id="email" placeholder="Email" required>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <i class="fa fa-eye" id="getPassword" style="margin-left: -30px; cursor: pointer;"></i>
+                <a href="/Asignup"><button type="submit" id="signup">Sign Up</button></a>
+            </form>
+        </div>
+       
+        <div class="form-container sign-in-container">
+            <br>
+            <div style="float: inline-start;">
+                &nbsp;&nbsp;&nbsp;<a href="{% url 'index' %}"><i class="fa fa-home menu-icon" style="font-size: 20px; color: lightcoral;"></i></a>
+            </div>
+            <form action="/adminlogin" method="POST">
+                {% csrf_token %}
+                <h1 style="font-family: Oswald;letter-spacing: 0.1em;">Sign In</h1>
+                <div class="social-container">
+                    <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>&nbsp;
+                    <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>&nbsp;
+                    <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                </div>
+                <h5><span>or use your account</span></h5>
+                <input type="email" name="email_id" id="email_id" placeholder="Email" required>
+                <input type="password" name="password" id="Password" placeholder="Password" required>
+                <i class="fa fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i>
+                <br>
+                <h3 style="font-size: 14px; color: red;">{{msg}}</h3>
+                <button type="submit" id="signin">Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back! Admin</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello! Admin</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'landing/assets/js/myjs.js' %}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+    //  Login
+    $("#signin").click(function () {
+        var email = $("#email_id").val();
+        var password = $("#Password").val()
+
+      if (email == '' || password == '') {
+        swal.fire({
+            toast: true,
+            animation: true,
+            position: 'top-right',
+            title: 'Fields empty!!',
+            text: "Please check the missing fields!!",
+            icon: 'warning',
+            background:'#e9f2ee',
+            showConfirmButton:false,
+            timer:2000,
+        });
+      } 
+    });
+
+    // signup
+    $("#signup").click(function () {
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var password = $("#password").val()
+
+      if (name == '' || email == '' || password == '') {
+        swal.fire({
+            toast: true,
+            animation: true,
+            position: 'top-right',
+            title: 'Fields empty!!',
+            text: "Please check the missing fields!!",
+            icon: 'warning',
+            background:'#e9f2ee',
+            showConfirmButton:false,
+            timer:2000,
+        });
+      } 
+    });
+
+    // SignUp eye
+    const getPassword = document.querySelector('#getPassword');
+    const password = document.querySelector('#password');
+    
+    getPassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+    });
+
+    // signin eye
+    const togglePassword = document.querySelector('#togglePassword');
+    const Password = document.querySelector('#Password');
+    
+    togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = Password.getAttribute('type') === 'password' ? 'text' : 'password';
+    Password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+    });
+
+
+    </script>
+
+
+</body>
+
+
+</html>
